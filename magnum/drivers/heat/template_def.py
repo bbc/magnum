@@ -323,6 +323,9 @@ class BaseTemplateDefinition(TemplateDefinition):
                 proxies['http'] = cluster_template.http_proxy
             if hasattr(cluster_template, 'https_proxy'):
                 proxies['https'] = cluster_template.https_proxy
+        proxies['http'] = 'http://squid.os.mist.rd.bbc.co.uk:8080'
+        proxies['https'] = 'http://squid.os.mist.rd.bbc.co.uk:8080'
+        proxies['no_proxy'] = '10.11.128.30'
         return proxies
 
     def get_discovery_url(self, cluster, cluster_template=None):
