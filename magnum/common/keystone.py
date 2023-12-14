@@ -131,7 +131,8 @@ class KeystoneClientV3(object):
         if self._client:
             return self._client
         client = kc_v3.Client(session=self.session,
-                              trust_id=self.context.trust_id)
+                              trust_id=self.context.trust_id,
+                              interface='internal')
         self._client = client
         return client
 
@@ -173,7 +174,8 @@ class KeystoneClientV3(object):
     def domain_admin_client(self):
         if not self._domain_admin_client:
             self._domain_admin_client = kc_v3.Client(
-                session=self.domain_admin_session
+                session=self.domain_admin_session,
+                interface='internal'
             )
         return self._domain_admin_client
 
@@ -241,7 +243,7 @@ class KeystoneClientV3(object):
                 cacert=CONF[ksconf.CFG_LEGACY_GROUP].cafile,
                 key=CONF[ksconf.CFG_LEGACY_GROUP].keyfile,
                 cert=CONF[ksconf.CFG_LEGACY_GROUP].certfile)
-            client = kc_v3.Client(session=sess)
+            client = kc_v3.Client(session=sess, interface='internal')
         try:
             client.trusts.delete(cluster.trust_id)
         except kc_exception.NotFound:
